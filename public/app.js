@@ -491,11 +491,14 @@ const FORMATS = [
       // Move time-display and controls to timer-screen directly, in correct order
       timerScreen.appendChild(timeDisplay);
       timerScreen.appendChild(controls);
+      // Move zoom-btn to body so it escapes hidden nav-cluster
+      document.body.appendChild(document.getElementById('zoom-btn'));
       requestAnimationFrame(fitZoomFontSize);
     } else {
       // Restore: put time-display back into timer-center, controls after timer-container
       const timerCenter = document.querySelector('.timer-center');
       const timerContainer = document.querySelector('.timer-container');
+      const navCluster = document.querySelector('.nav-cluster');
       if (timerCenter) {
         const phaseLabel = document.getElementById('phase-label');
         if (phaseLabel) {
@@ -506,6 +509,10 @@ const FORMATS = [
       }
       if (timerContainer) {
         timerContainer.after(controls);
+      }
+      // Put zoom-btn back into nav-cluster
+      if (navCluster) {
+        navCluster.appendChild(document.getElementById('zoom-btn'));
       }
       timeDisplay.style.fontSize = '';
     }

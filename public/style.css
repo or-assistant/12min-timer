@@ -442,19 +442,25 @@ body.zoomed .phase-label,
 body.zoomed .phase-subtext,
 body.zoomed .total-elapsed { display: none; }
 
+/* zoom-btn: moved to body via JS, styled for zoom mode */
 body.zoomed #zoom-btn {
-  display: block !important;
   position: fixed;
   top: 1rem;
   right: 1rem;
   z-index: 10001;
   background: transparent;
-  color: var(--white);
-  border: 1px solid rgba(255,255,255,0.4);
-  padding: 0.3rem 0.6rem;
+  color: rgba(255,255,255,0.5);
+  border: 1px solid rgba(255,255,255,0.2);
+  padding: 0.2rem 0.5rem;
   border-radius: 6px;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   cursor: pointer;
+  opacity: 0.5;
+  transition: opacity 0.2s;
+}
+
+body.zoomed #zoom-btn:hover {
+  opacity: 1;
 }
 
 body.zoomed .time-display {
