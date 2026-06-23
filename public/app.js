@@ -477,6 +477,10 @@ const FORMATS = [
     else document.exitFullscreen();
   });
 
+  document.getElementById('zoom-btn').addEventListener('click', () => {
+    document.body.classList.toggle('zoomed');
+  });
+
   document.getElementById('theme-btn').addEventListener('click', () => {
     inverted = !inverted;
     document.body.classList.toggle('theme-inverted', inverted);
@@ -514,6 +518,7 @@ const FORMATS = [
       else if (e.code === 'ArrowRight') { e.preventDefault(); document.getElementById('skip-btn').click(); }
       else if (e.code === 'KeyR') { e.preventDefault(); document.getElementById('reset-btn').click(); }
       else if (e.code === 'KeyF') { e.preventDefault(); document.getElementById('fullscreen-btn').click(); }
+      else if (e.code === 'KeyZ') { e.preventDefault(); document.getElementById('zoom-btn').click(); }
       else if (e.code === 'KeyT') { e.preventDefault(); document.getElementById('theme-btn').click(); }
       else if (e.code === 'KeyL') { e.preventDefault(); document.getElementById('lang-btn').click(); }
     }

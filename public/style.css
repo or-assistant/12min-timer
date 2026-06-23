@@ -412,6 +412,38 @@ body.theme-inverted .seg-party {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  transition: width 0.3s ease, height 0.3s ease;
+}
+
+/* Zoom mode */
+body.zoomed .timer-container {
+  width: min(90vw, 90vh);
+  height: min(90vw, 90vh);
+}
+
+body.zoomed .event-header,
+body.zoomed .round-viz,
+body.zoomed .phase-label,
+body.zoomed .nav-cluster,
+body.zoomed .elapsed-blocks {
+  display: none;
+}
+
+body.zoomed .timer-screen {
+  justify-content: center;
+  padding: 0;
+}
+
+body.zoomed .time-display {
+  font-size: clamp(6rem, 22vw, 14rem);
+}
+
+body.zoomed .finished-screen .finished-brand {
+  font-size: clamp(3rem, 12vw, 8rem);
+}
+
+body.zoomed .finished-screen .finished-tagline {
+  font-size: clamp(1.5rem, 5vw, 3rem);
 }
 
 .timer-svg {
