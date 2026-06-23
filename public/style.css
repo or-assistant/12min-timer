@@ -421,8 +421,9 @@ body.zoomed {
 }
 
 body.zoomed .timer-screen {
-  justify-content: space-between;
-  padding: 8vh 0 3vh;
+  justify-content: center;
+  align-items: center;
+  padding: 2vh 0 5vh;
   min-height: 100vh;
   max-width: 100%;
   background: var(--red);
@@ -457,18 +458,20 @@ body.zoomed #zoom-btn {
 
 body.zoomed .time-display {
   display: block;
-  font-size: clamp(10rem, 50vh, 50rem);
+  font-size: clamp(8rem, 48vh, 48rem);
   line-height: 1;
   color: var(--white);
   text-align: center;
-  margin: auto 0;
+  margin: 0;
   width: 100%;
+  flex: 0 1 auto;
 }
 
 body.zoomed .controls {
   display: flex;
   gap: 0.5rem;
-  margin-top: 3rem;
+  margin-top: 5vh;
+  flex-shrink: 0;
 }
 
 body.zoomed .controls .ctrl-btn {
