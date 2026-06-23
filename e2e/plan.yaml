@@ -1,0 +1,17 @@
+version: 1
+scenarios:
+  - name: setup screen loads
+    steps:
+      - visit: "/"
+      - expect_text: "12MIN.ME"
+      - expect_text: "Don't waste your time!"
+      - expect_text: "Timer starten"
+  - name: start timer and see countdown
+    steps:
+      - visit: "/"
+      - fill: { test: "city-input", value: "Hamburg" }
+      - click_text: "Timer starten"
+      - wait_ms: 500
+      - expect_text: "Speaker"
+      - expect_text: "12:00"
+      - expect_text: "Runde 1 von 3"

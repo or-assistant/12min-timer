@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>12MIN.ME Event Timer</title>
+  <base href="/apps/12min-timer/">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="style.css">
+  <!-- Built with clawy — https://clawy.io -->
+</head>
+<body>
+
+  <div class="nav-cluster nav-left">
+    <button class="nav-btn" id="sound-btn" title="Sound an/aus">🔊</button>
+  </div>
+
+  <div class="nav-cluster">
+    <button class="nav-btn" id="lang-btn" title="Sprache / Language (L)">DE</button>
+    <button class="nav-btn theme-btn" id="theme-btn" title="Farben wechseln (T)"></button>
+    <button class="nav-btn" id="fullscreen-btn" title="Vollbild (F)">⛶</button>
+  </div>
+
+  <!-- ===== SETUP SCREEN ===== -->
+  <div class="setup-screen" id="setup-screen">
+    <div class="setup-logo">12MIN.ME</div>
+    <div class="setup-tagline" data-i18n="tagline">Don't waste your time!</div>
+
+    <div class="setup-form">
+      <div class="setup-field">
+        <label data-i18n="city">Stadt</label>
+        <select id="city-select" data-test="city-select"></select>
+      </div>
+
+      <div class="setup-field">
+        <label data-i18n="event">Format</label>
+        <select id="format-select" data-test="format-select"></select>
+      </div>
+
+      <div class="setup-field">
+        <label data-i18n="customEvent">Freier Event-Name (optional)</label>
+        <input type="text" id="custom-event-input" placeholder="z.B. AI & Sustainability" maxlength="80">
+      </div>
+
+      <div class="setup-field">
+        <label data-i18n="mode">Modus</label>
+        <div class="mode-toggle">
+          <button class="mode-btn active" id="auto-mode-btn" data-i18n="auto">Auto (durchlaufen)</button>
+          <button class="mode-btn" id="manual-mode-btn" data-i18n="manual">Manuell (pro Phase)</button>
+        </div>
+      </div>
+
+      <button class="start-btn" id="start-btn" data-test="start-btn" data-i18n="start">Timer starten</button>
+    </div>
+  </div>
+
+  <!-- ===== TIMER SCREEN ===== -->
+  <div class="timer-screen" id="timer-screen">
+    <div class="event-header">
+      <div class="event-city" id="event-city"></div>
+      <div class="event-name" id="event-name">12MIN.ME Event</div>
+    </div>
+
+    <div class="round-viz" id="round-viz"></div>
+    <div class="round-indicator" id="round-indicator">Runde 1 von 3</div>
+
+    <div class="timer-container">
+      <svg class="timer-svg" viewBox="0 0 400 400">
+        <circle class="timer-track" cx="200" cy="200" r="175"></circle>
+        <g id="ticks-group"></g>
+        <circle class="timer-progress" id="timer-progress" cx="200" cy="200" r="175"></circle>
+      </svg>
+
+      <div class="bell-container" id="bell-anim">
+        <svg viewBox="0 0 100 100" class="bell-svg">
+          <rect x="46" y="8" width="8" height="6" rx="2" fill="currentColor"/>
+          <path d="M50 14 C35 14, 28 30, 28 55 L28 68 L72 68 L72 55 C72 30, 65 14, 50 14 Z" fill="currentColor"/>
+          <rect x="24" y="68" width="52" height="6" rx="2" fill="currentColor"/>
+          <circle cx="50" cy="80" r="5" fill="currentColor" opacity="0.6"/>
+          <line x1="50" y1="74" x2="50" y2="78" stroke="currentColor" stroke-width="1.5"/>
+        </svg>
+        <div class="sound-wave wave-1"></div>
+        <div class="sound-wave wave-2"></div>
+        <div class="sound-wave wave-3"></div>
+      </div>
+
+      <div class="timer-center">
+        <div class="phase-label" id="phase-label">Speaker</div>
+        <div class="time-display" id="time-display">12:00</div>
+        <div class="phase-subtext" id="phase-subtext">12 Minuten Vortrag</div>
+        <div class="total-elapsed">
+          <span class="elapsed-block" id="elapsed-1">00:00</span>
+          <span class="elapsed-sep">+</span>
+          <span class="elapsed-block" id="elapsed-2">00:00</span>
+          <span class="elapsed-sep">+</span>
+          <span class="elapsed-block" id="elapsed-3">00:00</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="controls">
+      <button class="ctrl-btn primary" id="play-pause-btn" data-test="play-pause-btn"><span>⏸</span> Pause</button>
+      <button class="ctrl-btn" id="skip-btn" data-test="skip-btn"><span>⏭</span> Überspringen</button>
+      <button class="ctrl-btn danger" id="reset-btn" data-test="reset-btn"><span>↺</span> Reset</button>
+    </div>
+  </div>
+
+  <div class="transition-overlay" id="transition-overlay">
+    <div class="transition-text" id="transition-text">Pause</div>
+    <div class="transition-sub" id="transition-sub">Runde 2 folgt</div>
+  </div>
+
+  <div class="finished-screen" id="finished-screen">
+    <div class="finished-icon">🎉</div>
+    <div class="finished-title" id="finished-title">Geschafft!</div>
+    <div class="finished-sub" id="finished-sub">Zeit für offenes Netzwerken</div>
+    <div class="finished-brand">12MIN.ME — Don't waste your time!</div>
+  </div>
+
+  <div class="brand-footer">12MIN.ME</div>
+
+  <script src="app.js"></script>
+</body>
+</html>
