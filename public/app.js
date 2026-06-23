@@ -23,7 +23,7 @@ const FORMATS = [
 
   const I18N = {
     de: {
-      tagline: "Don't waste your time!",
+      tagline: "DON'T WASTE YOUR TIME!",
       city: 'Stadt', cityPlaceholder: 'Stadt wählen',
       event: 'Format', eventPlaceholder: 'Format wählen',
       mode: 'Modus', auto: 'Auto (durchlaufen)', manual: 'Manuell (pro Phase)',
@@ -37,7 +37,7 @@ const FORMATS = [
       transRound: 'Runde', transNext: 'folgt'
     },
     en: {
-      tagline: "Don't waste your time!",
+      tagline: "DON'T WASTE YOUR TIME!",
       city: 'City', cityPlaceholder: 'Select city',
       event: 'Format', eventPlaceholder: 'Select format',
       mode: 'Mode', auto: 'Auto (continuous)', manual: 'Manual (per phase)',
@@ -49,11 +49,40 @@ const FORMATS = [
       resetConfirm: 'Reset timer to zero?',
       finishedTitle: 'Done!', finishedSub: 'Time for open networking',
       transRound: 'Round', transNext: 'next'
+    },
+    tr: {
+      tagline: "DON'T WASTE YOUR TIME!",
+      city: 'Şehir', cityPlaceholder: 'Şehir seç',
+      event: 'Format', eventPlaceholder: 'Format seç',
+      mode: 'Mod', auto: 'Otomatik (sürekli)', manual: 'Manuel (aşama başına)',
+      start: 'Süreölçeri başlat', customEvent: 'Özel etkinlik adı (isteğe bağlı)',
+      phases: { speaker: 'Konuşmacı', guests: 'Sorular', pause: 'Mola' },
+      subtext: { speaker: '12 dakika sunum', guests: '12 dakika S&C', pause: '12 dakika mola' },
+      round: 'Tur', of: '/',
+      pause: 'Duraklat', resume: 'Devam et', next: 'İleri', skip: 'Atla', reset: 'Sıfırla',
+      resetConfirm: 'Süreölçer sıfırlansın mı?',
+      finishedTitle: 'Tamamlandı!', finishedSub: 'Ağ kurma zamanı',
+      transRound: 'Tur', transNext: 'başlıyor'
+    },
+    es: {
+      tagline: "DON'T WASTE YOUR TIME!",
+      city: 'Ciudad', cityPlaceholder: 'Seleccionar ciudad',
+      event: 'Formato', eventPlaceholder: 'Seleccionar formato',
+      mode: 'Modo', auto: 'Auto (continuo)', manual: 'Manual (por fase)',
+      start: 'Iniciar temporizador', customEvent: 'Nombre de evento personalizado (opcional)',
+      phases: { speaker: 'Ponente', guests: 'Preguntas', pause: 'Pausa' },
+      subtext: { speaker: '12 minutos de charla', guests: '12 minutos de preguntas', pause: '12 minutos de pausa' },
+      round: 'Ronda', of: 'de',
+      pause: 'Pausa', resume: 'Continuar', next: 'Siguiente', skip: 'Saltar', reset: 'Reiniciar',
+      resetConfirm: '¿Reiniciar temporizador?',
+      finishedTitle: '¡Hecho!', finishedSub: 'Hora de hacer networking',
+      transRound: 'Ronda', transNext: 'sigue'
     }
   };
 
   let lang = 'de';
   const t = () => I18N[lang];
+  function langLabel() { return { de: 'DE', en: 'EN', tr: 'TR', es: 'ES' }[lang] || 'DE'; }
 
   const PHASES = [
     { type: 'speaker', round: 1 }, { type: 'guests', round: 1 }, { type: 'pause', round: 1 },
@@ -111,6 +140,14 @@ const FORMATS = [
     });
   }
 
+  // When custom event name is typed, disable format dropdown
+  document.getElementById('custom-event-input').addEventListener('input', (e) => {
+    const formatSel = document.getElementById('format-select');
+    const hasText = e.target.value.trim().length > 0;
+    formatSel.disabled = hasText;
+    if (hasText) formatSel.value = '';
+  });
+
   // Apply language
   function applyLanguage() {
     document.querySelectorAll('[data-i18n]').forEach(el => {
@@ -153,10 +190,10 @@ const FORMATS = [
     const custom = customInput.value.trim();
 
     document.getElementById('event-city').textContent = city || '';
-    let displayName = '12MIN.ME Event';
-    if (format && custom) displayName = `12MIN.ME<span class="ev-sep">|</span>${format} — ${custom}`;
+    let displayName = '12MIN.ME';
+    if (format && custom) displayName = `12MIN.ME<span class="ev-sep">|</span>${custom.toUpperCase()}`;
     else if (format) displayName = `12MIN.ME<span class="ev-sep">|</span>${format}`;
-    else if (custom) displayName = custom;
+    else if (custom) displayName = `12MIN.ME<span class="ev-sep">|</span>${custom.toUpperCase()}`;
     document.getElementById('event-name').innerHTML = displayName;
 
     document.getElementById('setup-screen').style.display = 'none';
@@ -280,7 +317,6 @@ const FORMATS = [
     if (timeRemaining <= 30 && timeRemaining > 0) {
       timerProgress.classList.add('warn');
       document.getElementById('time-display').classList.add('warn');
-      if (timeRemaining % 10 === 0) playBellTing(880);
     }
     if (timeRemaining <= 0) {
       timeRemaining = 0;
@@ -328,6 +364,8 @@ const FORMATS = [
     intervalId = null; isRunning = false;
     document.getElementById('timer-screen').classList.remove('active');
     document.getElementById('finished-screen').classList.add('active');
+    document.getElementById('finished-title').textContent = t().finishedTitle;
+    document.getElementById('finished-sub').textContent = t().finishedSub;
     document.body.className = inverted ? 'theme-inverted' : '';
     // Triple bell for networking start
     playBell(523.25, 3.0, 0.6);
@@ -445,7 +483,7 @@ const FORMATS = [
   });
 
   document.getElementById('lang-btn').addEventListener('click', () => {
-    lang = lang === 'de' ? 'en' : 'de';
+    lang = lang === 'de' ? 'en' : lang === 'en' ? 'tr' : lang === 'tr' ? 'es' : 'de';
     applyLanguage();
     const ts = document.getElementById('timer-screen');
     if (ts.classList.contains('active') && currentPhaseIdx < PHASES.length) {
@@ -462,9 +500,10 @@ const FORMATS = [
       document.getElementById('reset-btn').innerHTML = `<span>↺</span> ${t().reset}`;
     }
     if (document.getElementById('finished-screen').classList.contains('active')) {
+      document.getElementById('finished-title').textContent = t().finishedTitle;
       document.getElementById('finished-sub').textContent = t().finishedSub;
     }
-    document.getElementById('lang-btn').textContent = lang.toUpperCase();
+    document.getElementById('lang-btn').textContent = langLabel();
   });
 
   // Keyboard
@@ -482,5 +521,5 @@ const FORMATS = [
 
   // Init
   applyLanguage();
-  document.getElementById('lang-btn').textContent = lang.toUpperCase();
+  document.getElementById('lang-btn').textContent = langLabel();
 })();

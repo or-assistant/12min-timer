@@ -150,6 +150,12 @@ body {
   color: var(--dark);
 }
 
+.setup-field select:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  background: var(--ctrl-bg);
+}
+
 .mode-toggle {
   display: flex;
   gap: 0.5rem;
