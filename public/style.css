@@ -421,8 +421,8 @@ body.zoomed {
 }
 
 body.zoomed .timer-screen {
-  justify-content: center;
-  padding: 0;
+  justify-content: space-between;
+  padding: 8vh 0 3vh;
   min-height: 100vh;
   max-width: 100%;
   background: var(--red);
@@ -442,11 +442,11 @@ body.zoomed .phase-subtext { display: none; }
 
 body.zoomed .time-display {
   display: block;
-  font-size: clamp(8rem, 45vmin, 35rem);
+  font-size: clamp(10rem, 50vh, 50rem);
   line-height: 1;
   color: var(--white);
   text-align: center;
-  margin: 0;
+  margin: auto 0;
   width: 100%;
 }
 
