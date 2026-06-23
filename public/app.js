@@ -478,7 +478,14 @@ const FORMATS = [
   });
 
   document.getElementById('zoom-btn').addEventListener('click', () => {
-    document.body.classList.toggle('zoomed');
+    const isZoomed = document.body.classList.toggle('zoomed');
+    const timeDisplay = document.getElementById('time-display');
+    const timerScreen = document.getElementById('timer-screen');
+    if (isZoomed) {
+      timerScreen.appendChild(timeDisplay);
+    } else {
+      document.querySelector('.timer-container').appendChild(timeDisplay);
+    }
   });
 
   document.getElementById('theme-btn').addEventListener('click', () => {
