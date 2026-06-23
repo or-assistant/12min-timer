@@ -440,6 +440,21 @@ body.zoomed .round-indicator,
 body.zoomed .phase-label,
 body.zoomed .phase-subtext { display: none; }
 
+body.zoomed #zoom-btn {
+  display: block !important;
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 10001;
+  background: transparent;
+  color: var(--white);
+  border: 1px solid rgba(255,255,255,0.4);
+  padding: 0.3rem 0.6rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
 body.zoomed .time-display {
   display: block;
   font-size: clamp(10rem, 50vh, 50rem);

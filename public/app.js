@@ -480,11 +480,18 @@ const FORMATS = [
   document.getElementById('zoom-btn').addEventListener('click', () => {
     const isZoomed = document.body.classList.toggle('zoomed');
     const timeDisplay = document.getElementById('time-display');
+    const timerContainer = document.querySelector('.timer-container');
     const timerScreen = document.getElementById('timer-screen');
     if (isZoomed) {
       timerScreen.appendChild(timeDisplay);
     } else {
-      document.querySelector('.timer-container').appendChild(timeDisplay);
+      // Insert back into timer-container, after phase-label
+      const phaseLabel = document.getElementById('phase-label');
+      if (phaseLabel && phaseLabel.nextSibling) {
+        timerContainer.insertBefore(timeDisplay, phaseLabel.nextSibling);
+      } else {
+        timerContainer.appendChild(timeDisplay);
+      }
     }
   });
 
