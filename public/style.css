@@ -415,7 +415,7 @@ body.theme-inverted .seg-party {
   transition: width 0.3s ease, height 0.3s ease;
 }
 
-/* Zoom mode — red fullscreen, only time + small controls */
+/* Zoom mode — red fullscreen, adaptive countdown via JS */
 body.zoomed {
   background: var(--red);
 }
@@ -423,7 +423,7 @@ body.zoomed {
 body.zoomed .timer-screen {
   justify-content: center;
   align-items: center;
-  padding: 3vh 2vw;
+  padding: 0;
   min-height: 100vh;
   max-width: 100%;
   background: var(--red);
@@ -439,7 +439,8 @@ body.zoomed .event-header,
 body.zoomed .round-viz,
 body.zoomed .round-indicator,
 body.zoomed .phase-label,
-body.zoomed .phase-subtext { display: none; }
+body.zoomed .phase-subtext,
+body.zoomed .total-elapsed { display: none; }
 
 body.zoomed #zoom-btn {
   display: block !important;
@@ -458,13 +459,11 @@ body.zoomed #zoom-btn {
 
 body.zoomed .time-display {
   display: block;
-  font-size: clamp(6rem, min(42vh, 30vw), 42rem);
   line-height: 1;
   color: var(--white);
   text-align: center;
   margin: 0;
   width: 100%;
-  flex: 0 0 auto;
   font-variant-numeric: tabular-nums;
 }
 

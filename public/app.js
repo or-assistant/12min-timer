@@ -343,6 +343,8 @@ const FORMATS = [
     // Update segment fill
     const fill = document.querySelector('.seg.current .seg-fill');
     if (fill) fill.style.width = `${((PHASE_DURATION - timeRemaining) / PHASE_DURATION) * 100}%`;
+    // Re-fit zoom font if active
+    if (document.body.classList.contains('zoomed')) requestAnimationFrame(fitZoomFontSize);
   }
 
   function showTransition() {
@@ -483,19 +485,72 @@ const FORMATS = [
     if (!ts.classList.contains('active')) return;
     const isZoomed = document.body.classList.toggle('zoomed');
     const timeDisplay = document.getElementById('time-display');
-    const timerContainer = document.querySelector('.timer-container');
     const timerScreen = document.getElementById('timer-screen');
+    const controls = document.querySelector('.controls');
     if (isZoomed) {
+      // Move time-display and controls to timer-screen directly, in correct order
       timerScreen.appendChild(timeDisplay);
+      timerScreen.appendChild(controls);
+      requestAnimationFrame(fitZoomFontSize);
     } else {
-      const phaseLabel = document.getElementById('phase-label');
-      if (phaseLabel && phaseLabel.nextSibling) {
-        timerContainer.insertBefore(timeDisplay, phaseLabel.nextSibling);
-      } else {
-        timerContainer.appendChild(timeDisplay);
+      // Restore: put time-display back into timer-center, controls after timer-container
+      const timerCenter = document.querySelector('.timer-center');
+      const timerContainer = document.querySelector('.timer-container');
+      if (timerCenter) {
+        const phaseLabel = document.getElementById('phase-label');
+        if (phaseLabel) {
+          timerCenter.insertBefore(timeDisplay, phaseLabel.nextSibling);
+        } else {
+          timerCenter.appendChild(timeDisplay);
+        }
       }
+      if (timerContainer) {
+        timerContainer.after(controls);
+      }
+      timeDisplay.style.fontSize = '';
     }
   });
+
+  // Adaptive font sizing: measure actual rendered width/height and fit
+  function fitZoomFontSize() {
+    if (!document.body.classList.contains('zoomed')) return;
+    const td = document.getElementById('time-display');
+    if (!td) return;
+    const text = td.textContent || '12:00';
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+    // Reserve space for buttons (~60px) and padding
+    const reserveBottom = vh * 0.12;
+    const availH = vh - reserveBottom - (vh * 0.06);
+    const availW = vw * 0.92;
+    // Binary search for the largest font-size that fits
+    let lo = 40, hi = 800, best = 40;
+    // Use a hidden test span to measure
+    let tester = document.getElementById('zoom-font-tester');
+    if (!tester) {
+      tester = document.createElement('span');
+      tester.id = 'zoom-font-tester';
+      tester.style.cssText = 'position:fixed;visibility:hidden;white-space:nowrap;font-family:Blanch,Rubik,sans-serif;font-weight:bold;line-height:1;pointer-events:none;z-index:-1;';
+      document.body.appendChild(tester);
+    }
+    tester.textContent = text;
+    tester.style.fontFamily = getComputedStyle(td).fontFamily;
+    while (lo <= hi) {
+      const mid = Math.floor((lo + hi) / 2);
+      tester.style.fontSize = mid + 'px';
+      const w = tester.offsetWidth;
+      const h = mid; // line-height: 1 means height = fontSize
+      if (w <= availW && h <= availH) {
+        best = mid;
+        lo = mid + 1;
+      } else {
+        hi = mid - 1;
+      }
+    }
+    td.style.fontSize = best + 'px';
+  }
+
+  window.addEventListener('resize', fitZoomFontSize);
 
   document.getElementById('theme-btn').addEventListener('click', () => {
     inverted = !inverted;
