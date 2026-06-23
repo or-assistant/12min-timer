@@ -423,7 +423,7 @@ body.zoomed {
 body.zoomed .timer-screen {
   justify-content: center;
   align-items: center;
-  padding: 2vh 0 5vh;
+  padding: 3vh 2vw;
   min-height: 100vh;
   max-width: 100%;
   background: var(--red);
@@ -458,19 +458,19 @@ body.zoomed #zoom-btn {
 
 body.zoomed .time-display {
   display: block;
-  font-size: clamp(8rem, 48vh, 48rem);
+  font-size: clamp(6rem, 42vh, 42rem);
   line-height: 1;
   color: var(--white);
   text-align: center;
   margin: 0;
   width: 100%;
-  flex: 0 1 auto;
+  flex: 0 0 auto;
 }
 
 body.zoomed .controls {
   display: flex;
   gap: 0.5rem;
-  margin-top: 5vh;
+  margin-top: 4vh;
   flex-shrink: 0;
 }
 

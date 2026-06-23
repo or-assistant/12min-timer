@@ -198,6 +198,7 @@ const FORMATS = [
 
     document.getElementById('setup-screen').style.display = 'none';
     document.getElementById('timer-screen').classList.add('active');
+    document.getElementById('zoom-btn').style.display = '';
     document.body.className = inverted ? 'theme-inverted' : '';
     currentPhaseIdx = 0;
     startPhase(0);
@@ -478,6 +479,8 @@ const FORMATS = [
   });
 
   document.getElementById('zoom-btn').addEventListener('click', () => {
+    const ts = document.getElementById('timer-screen');
+    if (!ts.classList.contains('active')) return;
     const isZoomed = document.body.classList.toggle('zoomed');
     const timeDisplay = document.getElementById('time-display');
     const timerContainer = document.querySelector('.timer-container');
@@ -485,7 +488,6 @@ const FORMATS = [
     if (isZoomed) {
       timerScreen.appendChild(timeDisplay);
     } else {
-      // Insert back into timer-container, after phase-label
       const phaseLabel = document.getElementById('phase-label');
       if (phaseLabel && phaseLabel.nextSibling) {
         timerContainer.insertBefore(timeDisplay, phaseLabel.nextSibling);
@@ -541,4 +543,5 @@ const FORMATS = [
   // Init
   applyLanguage();
   document.getElementById('lang-btn').textContent = langLabel();
+  document.getElementById('zoom-btn').style.display = 'none';
 })();
