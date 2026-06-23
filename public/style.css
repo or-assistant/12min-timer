@@ -415,19 +415,16 @@ body.theme-inverted .seg-party {
   transition: width 0.3s ease, height 0.3s ease;
 }
 
-/* Zoom mode */
-body.zoomed .timer-container {
-  width: min(90vw, 90vh);
-  height: min(90vw, 90vh);
-}
-
+/* Zoom mode — hide ring + everything, show only countdown digits huge */
+body.zoomed .timer-container { visibility: hidden; }
+body.zoomed .timer-svg,
+body.zoomed .bell-container { display: none; }
 body.zoomed .event-header,
 body.zoomed .round-viz,
 body.zoomed .phase-label,
 body.zoomed .nav-cluster,
-body.zoomed .elapsed-blocks {
-  display: none;
-}
+body.zoomed .elapsed-blocks,
+body.zoomed .controls { display: none; }
 
 body.zoomed .timer-screen {
   justify-content: center;
@@ -435,15 +432,14 @@ body.zoomed .timer-screen {
 }
 
 body.zoomed .time-display {
-  font-size: clamp(6rem, 22vw, 14rem);
-}
-
-body.zoomed .finished-screen .finished-brand {
-  font-size: clamp(3rem, 12vw, 8rem);
-}
-
-body.zoomed .finished-screen .finished-tagline {
-  font-size: clamp(1.5rem, 5vw, 3rem);
+  visibility: visible;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  font-size: clamp(8rem, 40vw, 30rem);
+  line-height: 1;
 }
 
 .timer-svg {
