@@ -458,38 +458,41 @@ body.zoomed #zoom-btn {
 
 body.zoomed .time-display {
   display: block;
-  font-size: clamp(6rem, 42vh, 42rem);
+  font-size: clamp(6rem, min(42vh, 30vw), 42rem);
   line-height: 1;
   color: var(--white);
   text-align: center;
   margin: 0;
   width: 100%;
   flex: 0 0 auto;
+  font-variant-numeric: tabular-nums;
 }
 
 body.zoomed .controls {
   display: flex;
-  gap: 0.5rem;
-  margin-top: 4vh;
+  gap: 0.4rem;
+  margin-top: 3vh;
   flex-shrink: 0;
 }
 
 body.zoomed .controls .ctrl-btn {
   background: transparent;
-  color: var(--white);
-  border: 1px solid rgba(255,255,255,0.4);
-  font-size: 0.75rem;
-  padding: 0.4rem 0.8rem;
-  border-radius: 8px;
+  color: rgba(255,255,255,0.7);
+  border: 1px solid rgba(255,255,255,0.25);
+  font-size: 0.7rem;
+  padding: 0.3rem 0.7rem;
+  border-radius: 6px;
 }
 
 body.zoomed .controls .ctrl-btn:hover {
-  background: rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.1);
+  color: var(--white);
 }
 
 body.zoomed .controls .ctrl-btn.primary {
-  background: rgba(255,255,255,0.15);
-  border-color: rgba(255,255,255,0.6);
+  background: rgba(255,255,255,0.1);
+  border-color: rgba(255,255,255,0.4);
+  color: var(--white);
 }
 
 .timer-svg {
