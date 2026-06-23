@@ -426,9 +426,11 @@ body.zoomed .timer-screen {
   min-height: 100vh;
   max-width: 100%;
   background: var(--red);
+  flex-direction: column;
+  gap: 0;
 }
 
-body.zoomed .timer-container { visibility: hidden; width: 0; height: 0; }
+body.zoomed .timer-container { display: contents; }
 body.zoomed .timer-svg,
 body.zoomed .bell-container,
 body.zoomed .nav-cluster,
@@ -440,25 +442,21 @@ body.zoomed .phase-label,
 body.zoomed .phase-subtext { display: none; }
 
 body.zoomed .time-display {
+  display: block;
   visibility: visible;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -55%);
-  z-index: 9999;
-  font-size: clamp(8rem, 40vw, 30rem);
+  position: static;
+  font-size: clamp(6rem, 35vmin, 25rem);
   line-height: 1;
   color: var(--white);
+  text-align: center;
+  margin: 0;
 }
 
 body.zoomed .controls {
-  position: fixed;
-  bottom: 1.5rem;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 10000;
+  position: static;
   display: flex;
   gap: 0.5rem;
+  margin-top: 4rem;
 }
 
 body.zoomed .controls .ctrl-btn {
